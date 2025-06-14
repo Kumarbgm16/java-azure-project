@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('git clone') {
             steps {
-               git 'https://github.com/Kumarbgm16/java-azure-project.git'
+               git 'https://github.com/coderepo2891/java-azure-project-forked.git'
             }
         }
         stage('maven package') {
@@ -11,26 +11,29 @@ pipeline {
                sh 'mvn clean package'
             }
         }
-        stage('create the docker image') {
+		stage('create the docker image') {
             steps {
-            sh 'sudo docker build -t saidevops16/apacheapp:latest .'
+            sh 'sudo docker build -t aqibdocker2891/web-java-awsb60:v1 .'
             }
         }
            stage('docker push ') {
      steps {
-     withCredentials([string(credentialsId: 'DOCKER_HUB', variable: 'DOCKER_HUB_PASS_CODE')])  {
+     withCredentials([string(credentialsId: 'DOCKER_HUB_pwd', variable: 'DOCKER_HUB_PASS_CODE')])  {
     // some block
-        sh "sudo docker login -u saidevops16 -p $DOCKER_HUB_PASS_CODE"
+        sh "sudo docker login -u aqibdocker2891 -p $DOCKER_HUB_PASS_CODE"
         }
-        sh "sudo docker push saidevops16/apacheapp:latest"
+        sh "sudo docker push aqibdocker2891/web-java-awsb60:v1"
         }
-        } 
-           stage('Deploy to docker Env') {
+        } 	
+  stage('Deploy to docker Env') {
     steps {
-    sh "sudo docker rm -f app3" 
-    sh "sudo docker run -itd --name app3 -p 9000:8080 saidevops16/apacheapp:latest" 
+   sh "sudo docker rm -f mysecureapp" 
+    sh "sudo docker run -itd --name mysecureapp -p 9000:8080 aqibdocker2891/web-java-awsb60:v1" 
 
 }
 }
     } 
     }
+	
+	
+	
