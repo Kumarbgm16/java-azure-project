@@ -18,7 +18,7 @@ pipeline {
         }
            stage('docker push ') {
      steps {
-     withCredentials([string(credentialsId: 'DOCKER_HUB_pwd', variable: 'DOCKER_HUB_PASS_CODE')])  {
+     withCredentials([string(credentialsId: 'DOCKER_HUB_PWD', variable: 'DOCKER_HUB_PASS_CODE')])  {
     // some block
         sh "sudo docker login -u aqibdocker2891 -p $DOCKER_HUB_PASS_CODE"
         }
