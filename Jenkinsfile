@@ -36,7 +36,8 @@ pipeline {
    stage('Deploy to Kube Env') {
     steps {
    withKubeConfig(caCertificate: '', clusterName: 'my-eks22.ap-south-1.eksctl.io', contextName: '', credentialsId: 'k8-cred', namespace: 'default', restrictKubeConfigAccess: false, serverUrl: 'https://16FA34983DC8A5E40441BEC0043ADEA8.gr7.ap-south-1.eks.amazonaws.com') {
-     sh "kubectl apply -f k8-dep-svc.yml"   
+       sh "kubectl delete deploy spring-boot-k8s-deployment"
+       sh "kubectl apply -f k8-dep-svc.yml"   
 }
 }
 }
