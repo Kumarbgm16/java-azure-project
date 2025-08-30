@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -30,6 +31,13 @@ pipeline {
     steps {
         sh "sudo docker rm -f app3" 
     sh "sudo docker run -itd --name app3 -p 9000:8080 saidevops16/apache240825:latest" 
+}
+}
+   stage('Deploy to Kube Env') {
+    steps {
+   withKubeConfig(caCertificate: '', clusterName: 'my-eks22.ap-south-1.eksctl.io', contextName: '', credentialsId: 'k8-cred', namespace: 'default', restrictKubeConfigAccess: false, serverUrl: 'https://16FA34983DC8A5E40441BEC0043ADEA8.gr7.ap-south-1.eks.amazonaws.com') {
+     sh "kubectl apply -f k8-dep-svc.yml"   
+}
 }
 }
     }
