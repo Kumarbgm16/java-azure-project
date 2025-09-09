@@ -17,15 +17,7 @@ spec:
           image: saidevops16/apache240825:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
-          resources:
-            requests:
-              memory: "32Mi" 
-              cpu: "100m"      
-            limits:
-              memory: "1Gi" 
-              cpu: "1000m"      
-              
+            - containerPort: 8080         
 ---
 
 apiVersion: v1 # Kubernetes API version
