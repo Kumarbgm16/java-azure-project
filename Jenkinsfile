@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -15,31 +14,24 @@ pipeline {
         }
          stage('create the docker image') {
             steps {
-            sh 'sudo docker build -t saidevops16/apache240825:latest .'
+            sh 'sudo docker build -t saidevops16/apache130925:latest .'
             }
-        }
-        stage('docker push ') {
+        } 
+         stage('docker push ') {
      steps {
-     withCredentials([string(credentialsId: 'DOCKER_HUB_PWD', variable: 'DOCKER_HUB_PASS_CODE')])  {
+     withCredentials([string(credentialsId: 'DOCKER_HUB_PWD2', variable: 'DOCKER_HUB_PASS_CODE')])  {
     // some block
         sh "sudo docker login -u saidevops16 -p $DOCKER_HUB_PASS_CODE"
         }
-        sh "sudo docker push saidevops16/apache240825:latest"
+        sh "sudo docker push saidevops16/apache130925:latest"
         }
         }
-          stage('Deploy to docker Env') {
+        stage('Deploy to docker Env') {
     steps {
-        sh "sudo docker rm -f app3" 
-    sh "sudo docker run -itd --name app3 -p 9000:8080 saidevops16/apache240825:latest" 
+                sh "sudo docker rm -f app3" 
+    sh "sudo docker run -itd --name app3 -p 9000:8080 saidevops16/apache130925:latest" 
 }
 }
-   stage('Deploy to Kube Env') {
-    steps {
-   withKubeConfig(caCertificate: '', clusterName: 'my-eks22.ap-south-1.eksctl.io', contextName: '', credentialsId: 'k8-cred', namespace: 'default', restrictKubeConfigAccess: false, serverUrl: 'https://16FA34983DC8A5E40441BEC0043ADEA8.gr7.ap-south-1.eks.amazonaws.com') {
-       sh "kubectl delete deploy spring-boot-k8s-deployment"
-       sh "kubectl apply -f k8-dep-svc.yml"   
-}
-}
-}
+        
     }
 }
